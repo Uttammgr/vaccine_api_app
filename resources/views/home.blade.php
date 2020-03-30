@@ -34,7 +34,7 @@
                     </ul>
 
                 </div>
-            </div>s
+            </div>
 
         <div class="col-md-8">
             <div class="card">
@@ -192,6 +192,7 @@
                             </div>
                         </div>
                             </div>
+                        </div>
                         </div>
                         </div>
                 </div>

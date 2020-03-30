@@ -22,7 +22,7 @@ class CreateVaccinesTable extends Migration
             $table->text('diseases_description');
             $table->string('qualified_candidate');
             $table->string('disqualified_candidate');
-            $table->string('precautions');
+            $table->text('precautions');
             $table->string('required_doses');
             $table->string('taken_doses');
             $table->string('age');
