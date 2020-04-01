@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
 
         <div class="card">
-                <div class="card-header">Menu`</div>
+                <div class="card-header">Menu</div>
 
                 <div class="card-body">
 
@@ -18,11 +18,11 @@
                         @endcan
 
                         <li class="nav-item">
-                        <a class="nav-link nth-child"  href="{{url('vaccine')}}">Vaccines</a>
+                        <a class="nav-link nth-child"  href="{{ route('vaccine.index') }}">Vaccines</a>
                         </li>
 
                             <li class="nav-item"  >
-                            <a class="nav-link nth-child" href="">vaccines taken</a>
+                            <a class="nav-link nth-child" href="{{ route('usage.index') }}">Vaccine taken</a>
                         </li>
 
 

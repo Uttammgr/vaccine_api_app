@@ -15,20 +15,17 @@ class CreateVaccinesTable extends Migration
     {
         Schema::create('vaccines', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('vaccine_name');
-            $table->text('vaccine_description');
-            $table->text('vaccine_side_effect');
-            $table->text('diseases_description');
-            $table->string('qualified_candidate');
-            $table->string('disqualified_candidate');
-            $table->text('precautions');
-            $table->string('required_doses');
-            $table->string('taken_doses');
-            $table->string('age');
+            $table->string('vaccine_name')->nullable();
+            $table->text('vaccine_description')->nullable();
+            $table->text('vaccine_side_effect')->nullable();
+            $table->text('diseases_description')->nullable();
+            $table->string('qualified_candidate')->nullable();
+            $table->string('disqualified_candidate')->nullable();
+            $table->text('precautions')->nullable();
+            $table->string('required_doses')->nullable();
+            $table->string('age')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

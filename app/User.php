@@ -51,6 +51,12 @@ class User extends Authenticatable
         return $this->hasMany(Vaccine::class);
     }
 
+     public function usages()
+    {
+        return $this->hasMany(Usage::class);
+    }
+
+
     public function roles(){
         return $this->belongsToMany('App\Role');
     }

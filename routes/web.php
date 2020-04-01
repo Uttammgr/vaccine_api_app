@@ -21,10 +21,15 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
+Route::resource('/vaccine', 'VaccinesController')->middleware('auth');
+Route::resource('/usage', 'UsageController')->middleware('auth');
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:manage-users')->group(function(){
  Route::resource('/users', 'UsersController',['except' => ['show','create','store']]);
 });
+
+
+
+
 
 

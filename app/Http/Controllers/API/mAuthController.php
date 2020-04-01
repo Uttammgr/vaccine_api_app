@@ -36,9 +36,10 @@ class mAuthController extends Controller
         $input = $request->all();
         $input['password'] = Hash::make($request->pasword);
         $user = User::create($input);
-        $access_token = $user->createToken('authToken')->accessToken;
+//        $access_token = $user->createToken('authToken')->accessToken;
 
-        return response()->json([ 'status' => $this->successStatus, 'User' => $user, 'access_token'=> $access_token], );
+//        return response()->json([ 'status' => $this->successStatus, 'User' => $user, 'access_token'=> $access_token]);
+        return response()->json([ 'status' => $this->successStatus, 'User' => $user]);
     }
 
 
@@ -54,8 +55,9 @@ class mAuthController extends Controller
             return response()->json(['error'=>'authentication failed, Unauthorised'], 401);
         }
 
-        $access_token = auth()->user()->createToken('authToken')->accessToken;
-        return response()->json([ 'status' => $this->successStatus, 'User' =>  auth()->user(), 'access_token'=> $access_token], );
+//        $access_token = auth()->user()->createToken('authToken')->accessToken;
+//        return response()->json([ 'status' => $this->successStatus, 'User' =>  auth()->user(), 'access_token'=> $access_token] );
+        return response()->json([ 'status' => $this->successStatus, 'User' =>  auth()->user()] );
     }
 
 
@@ -70,6 +72,23 @@ class mAuthController extends Controller
     public function show($id){
          $user = User::findOrFail($id);
         return response()->json($user);
+
+    }
+
+    //update user
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->update($request->all());
+        return response()->json($user);
+    }
+
+    //delete user
+    public function destroy($id){
+
+        $user = User::find($id);
+        $user->delete();
+        return ['response'=>'success',"msg"=>"successfully deleted"];
 
     }
 }

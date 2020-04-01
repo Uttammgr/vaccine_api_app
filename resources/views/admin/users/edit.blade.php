@@ -106,7 +106,7 @@
                             <div class="col-md-6">
 
                                 <select name="blood_type" class="custom-select">
-                                    <option selected>Select your blood type</option>
+                                    <option selected>Select your blood type </option>
 
                                     <option value="">O Positive</option>
                                     <option value="O Negative">O Negative</option>
