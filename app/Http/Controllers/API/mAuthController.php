@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Role;
 use App\User;
 use Validator;
 use Illuminate\Http\Request;
@@ -36,10 +37,12 @@ class mAuthController extends Controller
         $input = $request->all();
         $input['password'] = Hash::make($request->pasword);
         $user = User::create($input);
-//        $access_token = $user->createToken('authToken')->accessToken;
+        $role = Role::select('id')->where('name', 'user')->first();
+        $user->roles()->attach($role);
+        $access_token = $user->createToken('authToken')->accessToken;
 
-//        return response()->json([ 'status' => $this->successStatus, 'User' => $user, 'access_token'=> $access_token]);
-        return response()->json([ 'status' => $this->successStatus, 'User' => $user]);
+        return response()->json([ 'status' => $this->successStatus, 'User' => $user, 'access_token'=> $access_token]);
+//        return response()->json([ 'status' => $this->successStatus, 'User' => $user]);
     }
 
 
@@ -55,9 +58,9 @@ class mAuthController extends Controller
             return response()->json(['error'=>'authentication failed, Unauthorised'], 401);
         }
 
-//        $access_token = auth()->user()->createToken('authToken')->accessToken;
-//        return response()->json([ 'status' => $this->successStatus, 'User' =>  auth()->user(), 'access_token'=> $access_token] );
-        return response()->json([ 'status' => $this->successStatus, 'User' =>  auth()->user()] );
+        $access_token = auth()->user()->createToken('authToken')->accessToken;
+        return response()->json([ 'status' => $this->successStatus, 'User' =>  auth()->user(), 'access_token'=> $access_token] );
+//        return response()->json([ 'status' => $this->successStatus, 'User' =>  auth()->user()] );
     }
 
 
