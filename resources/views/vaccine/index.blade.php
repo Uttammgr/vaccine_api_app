@@ -6,10 +6,14 @@
         <div class="col-xl-12">
 
             <div class="row justify-content-center">
+                 @can('manage-users')
                 <div class="col4 mb-4">
-                <a href=" {{route('vaccine.create')}} ">
-                    <button class="btn btn-primary">Add new vaccine</button></a>
-            </div>
+                    <a href=" {{route('vaccine.create')}} ">
+
+                        <button class="btn btn-primary">Add new vaccine</button></a>
+
+                </div>
+                @endcan
 
             </div>
                     <div class="card">

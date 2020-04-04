@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use App\Role;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,7 +31,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+//    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/usage/create';
 
     /**
      * Create a new controller instance.
@@ -52,7 +54,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
 
-            'user_name'     => ['required', 'string', 'max:255'],
+            'user_name'     => ['required', 'string', 'unique:users'],
             'full_name'     => ['required', 'string', 'max:255'],
             'address'       => ['required', 'string'],
             'mobile_no'     => ['required', 'string'],
@@ -74,20 +76,33 @@ class RegisterController extends Controller
     {
         // dd($data);
 
-        $user =  User::create([
-            'user_name'     => $data['user_name'],
-            'full_name'     => $data['full_name'],
-            'address'       => $data['address'],
-            'mobile_no'     => $data['mobile_no' ],
-            'date_of_birth' => $data['date_of_birth'],
-            'gender'        => $data['gender'],
-            'blood_type'    => $data['blood_type'],
-            'email'         => $data['email'],
-            'password'      => Hash::make($data['password']),
-        ]);
+//        $user =  User::create([
+//            'user_name'     => $data['user_name'],
+//            'full_name'     => $data['full_name'],
+//            'address'       => $data['address'],
+//            'mobile_no'     => $data['mobile_no' ],
+//            'date_of_birth' => $data['date_of_birth'],
+//            'gender'        => $data['gender'],
+//            'blood_type'    => $data['blood_type'],
+//            'email'         => $data['email'],
+//            'password'      => Hash::make($data['password']),
+//        ]);
 
-        $role = Role::select('id')->where('name', 'user')->first();
-        $user->roles()->attach($role);
+
+        DB::beginTransaction();
+        try {
+             $userReqData = request()->all();
+             $userReqData['password'] = Hash::make($data['password']);
+             $user = User::create($userReqData);
+
+             $role = Role::select('id')->where('name', 'user')->first();
+             $user->roles()->attach($role);
+
+             DB::commit();
+        } catch (\Exception $e){
+            DB::rollBack();
+            throw $e;
+        }
         return $user;
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Role;
 use App\User;
+use Illuminate\Support\Facades\DB;
+use mysql_xdevapi\Exception;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,12 +36,18 @@ class mAuthController extends Controller
              return response()->json(['error'=>$validate->errors()], 401);
         }
 
-        $input = $request->all();
-        $input['password'] = Hash::make($request->pasword);
-        $user = User::create($input);
-        $role = Role::select('id')->where('name', 'user')->first();
-        $user->roles()->attach($role);
-        $access_token = $user->createToken('authToken')->accessToken;
+        DB::beginTransaction();
+        try {
+            $input = $request->all();
+            $input['password'] = Hash::make($request->pasword);
+            $user = User::create($input);
+            $role = Role::select('id')->where('name', 'user')->first();
+            $user->roles()->attach($role);
+            $access_token = $user->createToken('authToken')->accessToken;
+        }catch (Exception $e){
+            DB::rollBack();
+            throw $e;
+        }
 
         return response()->json([ 'status' => $this->successStatus, 'User' => $user, 'access_token'=> $access_token]);
 //        return response()->json([ 'status' => $this->successStatus, 'User' => $user]);

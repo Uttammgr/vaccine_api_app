@@ -28,10 +28,5 @@ Route::delete('/delete_user/{id}', 'API\mAuthController@destroy');
 
 
 
-Route::apiResource('/vaccines', 'API\VaccinesController');
-Route::apiResource('/vaccine_used', 'API\UsagesController');
-
-Route::group(['middleware' => 'auth:api'],function(){
-//  Route::post('profile', 'API/mAuthController@details');
-
-});
+Route::apiResource('/vaccines', 'API\VaccinesController')->middleware('auth');
+Route::apiResource('/vaccine_used', 'API\UsagesController')->middleware('auth');

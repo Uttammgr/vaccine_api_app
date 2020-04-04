@@ -125,19 +125,6 @@
                        @enderror
                      </div>
                    </div>
-                   <div class="form-group row">
-                     <label for="taken_doses" class="col-md-4 col-form-label text-md-right">{{ __('Taken doses') }}</label>
-
-                     <div class="col-md-6">
-                       <input id="taken_doses" type="number" class="form-control @error('taken_doses') is-invalid @enderror" name="taken_doses" value="{{ old('taken_doses') }}" required autocomplete="taken_doses" autofocus>
-
-                       @error('taken_doses')
-                       <span class="invalid-feedback" role="alert">
-                         <strong>{{ $message }}</strong>
-                       </span>
-                       @enderror
-                     </div>
-                   </div>
 
                    <div class="form-group row">
                      <label for="age" class="col-md-4 col-form-label text-md-right">{{ __('Age') }}</label>
