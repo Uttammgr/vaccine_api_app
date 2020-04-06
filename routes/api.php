@@ -21,12 +21,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', 'API\mAuthController@register');
 Route::post('/login', 'API\mAuthController@login');
-Route::get('/users', 'API\mAuthController@all_users');
+Route::get('/users', 'API\mAuthController@index');
 Route::get('/users/{id}', 'API\mAuthController@show');
 Route::patch('/update_user/{id}', 'API\mAuthController@update');
 Route::delete('/delete_user/{id}', 'API\mAuthController@destroy');
 
 
 
-Route::apiResource('/vaccines', 'API\VaccinesController')->middleware('auth');
-Route::apiResource('/vaccine_used', 'API\UsagesController')->middleware('auth');
+Route::apiResource('/vaccines', 'API\VaccinesController');
+//    ->middleware('auth');
+Route::apiResource('/vaccine_used', 'API\UsagesController');
+//    ->middleware('auth');

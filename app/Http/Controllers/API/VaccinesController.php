@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Helpers\responseHelpers;
 use App\Vaccine;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,10 @@ class VaccinesController extends Controller
      */
     public function index()
     {
-        return VaccineResource::collection(Vaccine::all());
+        $vaccine_list = VaccineResource::collection(Vaccine::all());
+        $respbind  = responseHelpers::createResponse(false, 200, null, $vaccine_list);
+        return response()->json($respbind, 200);
+
     }
 
     /**
@@ -29,7 +33,8 @@ class VaccinesController extends Controller
     {
         //
          $vaccine = Vaccine::create($request->all());
-         return new VaccineResource($vaccine);
+          $respbind  = responseHelpers::createResponse(false, 200, 'Success!! new vaccine added', $vaccine);
+         return response()->json($respbind, 200 );
     }
 
     /**
@@ -41,7 +46,9 @@ class VaccinesController extends Controller
     public function show($id)
     {
         $vaccine = Vaccine::find($id);
-         return new VaccineResource($vaccine);
+        $respbind  = responseHelpers::createResponse(false, 200, null, $vaccine);
+        return response()->json($respbind, 200);
+
 
     }
 
@@ -56,7 +63,8 @@ class VaccinesController extends Controller
     {
         $vaccine = Vaccine::find($id);
          $vaccine->update($request->all());
-         return new VaccineResource($vaccine);
+        $respbind  = responseHelpers::createResponse(false, 200, 'Success!! vaccine updated', null);
+        return response()->json($respbind, 200 );
     }
 
     /**
@@ -69,6 +77,7 @@ class VaccinesController extends Controller
     {
          $vaccine = Vaccine::find($id);
          $vaccine->delete();
-         return new VaccineResource($vaccine);
+         $respbind  = responseHelpers::createResponse(false, 200, 'Success!! vaccine record deleted', null);
+        return response()->json($respbind, 200 );
     }
 }

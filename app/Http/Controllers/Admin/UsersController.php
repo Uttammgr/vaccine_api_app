@@ -7,6 +7,7 @@ use App\User;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Resources\UserResource;
 
 class UsersController extends Controller
 {

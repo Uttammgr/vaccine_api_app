@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Helpers\responseHelpers;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UsageResource;
 use App\Usage;
@@ -16,7 +17,9 @@ class UsagesController extends Controller
      */
     public function index()
     {
-        return UsageResource::Collection(Usage::with('users','vaccines')->paginate(10));
+        $used_vaccines =  UsageResource::Collection(Usage::with('users','vaccines')->paginate(10));
+        $respbind  = responseHelpers::createResponse(false, 200, null, $used_vaccines);
+        return response()->json($respbind, 200);
 
     }
 
@@ -28,10 +31,9 @@ class UsagesController extends Controller
      */
     public function store(Request $request)
     {
-//         $user_id = auth::user()->id;
-//        $request->request->add(['user_id' => $user_id]);
         $vaccine_usage  = Usage::create($request->all());
-        return new UsageResource($vaccine_usage );
+        $respbind  = responseHelpers::createResponse(false, 200, 'Success!! new vaccine use added', $vaccine_usage);
+        return response()->json($respbind, 200 );
     }
 
     /**
@@ -43,7 +45,8 @@ class UsagesController extends Controller
     public function show($id)
     {
         $vaccine_usage = Usage::find($id);
-        return new UsageResource($vaccine_usage );
+        $respbind  = responseHelpers::createResponse(false, 200, null, $vaccine_usage);
+        return response()->json($respbind, 200);
 
     }
 
@@ -58,7 +61,8 @@ class UsagesController extends Controller
     {
         $vaccine_usage = Usage::find($id);
         $vaccine_usage->update($request->all());
-        return new UsageResource($vaccine_usage );
+        $respbind  = responseHelpers::createResponse(false, 200, 'Success!!taken vaccine updated', null);
+        return response()->json($respbind, 200 );
     }
 
     /**
@@ -71,6 +75,7 @@ class UsagesController extends Controller
     {
         $vaccine_usage = Usage::find($id);
         $vaccine_usage->delete();
-        return new UsageResource($vaccine_usage);
+        $respbind  = responseHelpers::createResponse(false, 200, 'Success!! taken vaccine record deleted', null);
+        return response()->json($respbind, 200 );
     }
 }

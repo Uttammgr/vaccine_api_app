@@ -13,6 +13,10 @@ class Usage extends Model
       'remaining_doses'
     ];
 
+    protected $hidden = [
+         'created_at', 'updated_at',
+    ];
+
     public function users(){
         return $this->belongsTo(User::class, 'user_id');
     }
