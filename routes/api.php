@@ -18,17 +18,21 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-
+//registering the users
 Route::post('/register', 'API\mAuthController@register');
 Route::post('/login', 'API\mAuthController@login');
-Route::get('/users', 'API\mAuthController@index');
-Route::get('/users/{id}', 'API\mAuthController@show');
-Route::patch('/update_user/{id}', 'API\mAuthController@update');
-Route::delete('/delete_user/{id}', 'API\mAuthController@destroy');
+
+//only for authenticated users
+Route::group(['middleware' => 'auth:api'],function(){
+    Route::get('/users', 'API\mAuthController@index');
+    Route::get('/users/{id}', 'API\mAuthController@show');
+    Route::patch('/update_user/{id}', 'API\mAuthController@update');
+    Route::delete('/delete_user/{id}', 'API\mAuthController@destroy');
+});
 
 
-
-Route::apiResource('/vaccines', 'API\VaccinesController');
-//    ->middleware('auth');
+//other api endpoints
+Route::apiResource('/vaccines', 'API\VaccinesController')
+    ->middleware('auth:api');
 Route::apiResource('/vaccine_used', 'API\UsagesController');
 //    ->middleware('auth');

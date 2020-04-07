@@ -6,15 +6,15 @@ use App\Helpers\responseHelpers;
 use App\Http\Resources\UserResource;
 use App\Role;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Http\Request;
-//use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 
 class mAuthController extends Controller
 {
-
+    //for listing all the users and single user for time being
     public function index()
     {
         $userListing = UserResource::Collection(User::with( 'usages')->paginate(10));
@@ -39,7 +39,8 @@ class mAuthController extends Controller
         ]);
 
         if ($validate->fails()){
-            return response()->json(['error'=>$validate->errors()], 401);
+              $respbind  = responseHelpers::createResponse(true, 400, [ "Failed!! User not registered",$validate->errors() ],  null);
+            return response()->json($respbind, 401);
         }
 
         $input = $request->all();
@@ -49,46 +50,32 @@ class mAuthController extends Controller
         $user->roles()->attach($role);
         $access_token = $user->createToken('authToken')->accessToken;
 
-        if ($access_token){
-             $respbind  = responseHelpers::createResponse(false, 201, 'Success!! User registered', ['User' => $user, 'access_token'=> $access_token]);
-             return response()->json($respbind, 200 );
-        }else{
-             $respbind  = responseHelpers::createResponse(true, 400, 'Failed!! User not registered', null);
-             return response()->json($respbind, 400);
-        }
+        $respbind  = responseHelpers::createResponse(false, 201, 'Success!! User registered', ['User' => $user, 'access_token'=> $access_token]);
+        return response()->json($respbind, 200 );
+
     }
 
+    // for login
     public function login(Request $request){
 
-        $validateLogin = $request->validate( [
-            'email' => 'required',
-            'password' => 'required ',
-        ]);
-
-         if(!auth()->attempt($validateLogin)) {
-            return response()->json(['error'=>'authentication failed, Unauthorised'], 401);
+        if (!Auth::attempt($request->all())) {
+            $respbind = responseHelpers::createResponse(true, 401, 'authentication failed, Unauthorised', null);
+            return response()->json($respbind, 401);
         }
+             $user =  Auth::user();
+             $access_token = $user->createToken('authToken')->accessToken;
+             $respbind  = responseHelpers::createResponse(false, 200, 'login Successful !!', ['User' => $user, 'access_token'=> $access_token]);
+             return response()->json($respbind, 200);
 
-        $access_token = auth()->user()->createToken('authToken')->accessToken;
-
-          if ($access_token){
-             $respbind  = responseHelpers::createResponse(false, 200, 'Login Successful !!', ['User' => auth()->user(), 'access_token'=> $access_token]);
-             return response()->json($respbind, 200 );
-        }else{
-              $respbind  = responseHelpers::createResponse(false, 401, 'Login failed !!', null);
-             return response()->json($respbind, 401 );
-          }
 
     }
 
     //get single registered user
-    public function show($id){
+  /*  public function show($id){
          $user = User::findOrFail($id);
          $respbind  = responseHelpers::createResponse(false, 200, null , $user);
          return response()->json($respbind, 200);
-
-
-    }
+    }*/
 
     //update user
     public function update(Request $request, $id)

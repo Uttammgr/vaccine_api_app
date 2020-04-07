@@ -8,11 +8,11 @@ class responseHelpers {
 
          if ($is_error){
              $taskresponse['Success'] = false;
-             $taskresponse['Status Code'] = $status_Code;
+             $taskresponse['Status_Code'] = $status_Code;
              $taskresponse['message'] = $message;
          }else{
              $taskresponse['Success'] = true;
-             $taskresponse['Status Code'] = $status_Code;
+             $taskresponse['Status_Code'] = $status_Code;
              if ($content === null){
                  $taskresponse['message'] = $message;
              }else{
