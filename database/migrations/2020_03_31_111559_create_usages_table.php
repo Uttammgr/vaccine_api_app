@@ -14,7 +14,7 @@ class CreateUsagesTable extends Migration
     public function up()
     {
         Schema::create('usages', function (Blueprint $table) {
-            $table->bigIncrements('id')->nullable();
+            $table->bigIncrements('usages_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('vaccine_id')->nullable();
             $table->string('taken_doses');
