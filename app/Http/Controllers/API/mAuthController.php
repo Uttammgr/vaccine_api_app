@@ -39,8 +39,8 @@ class mAuthController extends Controller
         ]);
 
         if ($validate->fails()){
-              $respbind  = responseHelpers::createResponse(true, 400, [ "Failed!! User not registered",$validate->errors() ],  null);
-            return response()->json($respbind, 401);
+              $respbind  = responseHelpers::createResponse(true, 400, $validate->errors(),  null);
+            return response()->json($respbind, 406);
         }
 
         $input = $request->all();
