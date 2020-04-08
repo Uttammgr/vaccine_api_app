@@ -24,6 +24,9 @@ class CreateVaccinesTable extends Migration
             $table->text('precautions')->nullable();
             $table->string('required_doses')->nullable();
             $table->string('age')->nullable();
+            $table->string('age_start')->nullable();
+            $table->string('age_end')->nullable();
+            $table->string('doses')->nullable();
             $table->timestamps();
 
         });
