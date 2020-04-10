@@ -29,27 +29,27 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                 @foreach ($usage  as  $used)
+                                 @forelse($usage  as $key =>  $used)
                                      <tr>
-                                          <th>{{ $used->id }}</th>
+                                          <th>{{ $key+1}}</th>
                                           <td>{{$used->vaccines->vaccine_name}}</td>
                                           <td>{{$used->vaccines->required_doses}}</td>
                                           <td>{{$used->taken_doses}}</td>
                                           <td>{{$used->remaining_doses}}</td>
-
                                          <td>
-
-                                             <form action="{{route('usage.destroy', $used->id)}}" method="post">
+                                             <form action="{{ route('usage.destroy', $used->id)  }}" method="post">
 
                                                  <a href="{{route('usage.edit', $used->id)}}">  <button type="button" class="btn btn-outline-primary">Edit</button> </a>
                                                  @csrf
-{{--                                                 @method('DELETE')--}}
-{{--                                                 <button type="submit" class="btn btn-outline-danger">Delete</button>--}}
+                                                 @method('DELETE')
+                                                 @can('manage-users')
+                                                 <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                                 @endcan
                                              </form>
-
                                          </td>
+                                         @empty<td>no record found</td>
                                      </tr>
-                                 @endforeach
+                                 @endforelse
 
 
                               </tbody>

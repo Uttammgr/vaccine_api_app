@@ -11,43 +11,31 @@
                             <form action="{{ route('usage.store')}}" method="post">
                                 @csrf
 
-
-
                         <div class="form-group row">
                             <label for="gender" class="col-md-4 col-form-label text-md-right">Vaccine Name</label>
 
                             <div class="col-md-6">
-
                                 <select name="vaccine_id" class="form-control">
                                  <option value="">Select</option>
                                         @foreach($vaccine_list as $vaccine)
                                             <option value="{{ $vaccine->id }}" @if(old('vaccine') === $vaccine->id) selected @endif>{{ $vaccine->vaccine_name }}</option>
                                         @endforeach
                                 </select>
-
-
                             </div>
                         </div>
-
-
 
                         <div class="form-group row">
                             <label for="taken_doses" class="col-md-4 col-form-label text-md-right">taken doses</label>
 
                             <div class="col-md-6">
                                 <input  type="number" class="form-control " name="taken_doses" value="" >
-
-
                             </div>
                         </div>
-
-                               <div class="form-group row">
+                                <div class="form-group row">
                             <label for="remaining_doses" class="col-md-4 col-form-label text-md-right">remaining doses</label>
 
                             <div class="col-md-6">
                                 <input type="number" class="form-control" name="remaining_doses" value=" " >
-
-
                             </div>
                         </div>
 

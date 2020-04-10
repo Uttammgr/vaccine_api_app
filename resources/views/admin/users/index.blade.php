@@ -10,7 +10,7 @@
                         <div class="card-body">
 
                             <table class="table">
-                              <thead>
+                              <thead class="thead-dark">
                                 <tr>
                                   <th scope="col">#</th>
                                   <th scope="col">User Name</th>
@@ -26,9 +26,9 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                 @foreach ($users  as  $user)
+                                 @foreach ($users  as $key => $user)
                                      <tr>
-                                          <th scope="row">{{ $user->id }}</th>
+                                          <th scope="row">{{ $key+1 }}</th>
                                           <td>{{$user->user_name}}</td>
                                           <td>{{$user->full_name}}</td>
                                           <td>{{$user->address}}</td>
@@ -39,15 +39,13 @@
                                           <td>{{$user->email}}</td>
                                           <td>{{implode(', ', $user->roles()->get()->pluck('name')->toArray())}} </td>
                                          <td>
-
-                                             @can('edit-users')
-                                             <a href="{{route('admin.users.edit', $user->id)}}"><button type="button" class="btn btn-outline-primary float-left mr-2">Edit</button></a>
-                                             @endcan
-
                                              <form action="{{route('admin.users.destroy', $user)}}" method="POST">
+                                                @can('edit-users')
+                                                    <a href="{{route('admin.users.edit', $user->id)}}"><button type="button" class="btn btn-outline-primary float-left mr-2">Edit</button></a>
+                                                @endcan
                                                  @csrf
                                                  {{ method_field('DELETE') }}
-                                                 <button type="submit" class="btn btn-outline-danger float-left">Delete</button>
+                                                 <button type="submit" class="btn btn-outline-danger float-left mr-2">Delete</button>
                                              </form>
 
                                          </td>

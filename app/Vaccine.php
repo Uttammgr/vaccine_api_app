@@ -23,9 +23,9 @@ class Vaccine extends Model
 
      ];
 
-//    public function users(){
-//        return $this->belongsTo(Users::class,'user_id','id');
-//    }
+    public function vaccine_dose_time(){
+        return $this->hasMany(Usage::class);
+    }
 
 
 }

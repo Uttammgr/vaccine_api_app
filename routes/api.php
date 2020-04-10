@@ -23,16 +23,17 @@ Route::post('/register', 'API\mAuthController@register');
 Route::post('/login', 'API\mAuthController@login');
 
 //only for authenticated users
-Route::group(['middleware' => 'auth:api'],function(){
+//Route::group(['middleware' => 'auth:api'],function(){
     Route::get('/users', 'API\mAuthController@index');
     Route::get('/users/{id}', 'API\mAuthController@show');
     Route::patch('/update_user/{id}', 'API\mAuthController@update');
     Route::delete('/delete_user/{id}', 'API\mAuthController@destroy');
-});
+//});
 
 
 //other api endpoints
-Route::apiResource('/vaccines', 'API\VaccinesController')
-    ->middleware('auth:api');
+Route::apiResource('/vaccines', 'API\VaccinesController');
+//    ->middleware('auth:api');
 Route::apiResource('/vaccine_used', 'API\UsagesController');
 //    ->middleware('auth');
+Route::apiResource('/vaccines_times', 'API\VaccinationTimeController');

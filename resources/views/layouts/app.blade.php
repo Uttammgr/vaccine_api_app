@@ -30,7 +30,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
              @auth
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <div class="collapse navbar-collapse ml-5" id="navbarNavDropdown">
                     <ul class="navbar-nav mx-auto">
                       <li class="nav-item active">
                         <a class="nav-link" href="{{ url('/home') }}">Home <span class="sr-only">(current)</span></a>
@@ -44,6 +44,10 @@
 
                        <li class="nav-item">
                         <a class="nav-link" href="{{ route('vaccine.index') }}">Vaccines</a>
+                      </li>
+
+                        <li class="nav-item">
+                        <a class="nav-link" href="{{ route('vaccine_time.index') }}">Dose / time Tracker</a>
                       </li>
 
                       <li class="nav-item dropdown">

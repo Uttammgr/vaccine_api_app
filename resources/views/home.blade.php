@@ -30,7 +30,7 @@
 
                         <div class="card-body">
                                 <div class="form-group row">
-                            <label for="user_name" class="col-md-4 col-form-label text-md-right">{{ __('User name') }}</label>
+                            <label for="user_name" class="col-md-4 col-form-label text-md-right">{{ __('User name') }} :</label>
 
                             <div class="col-md-6">
                                 <input id="user_name" type="text" class="form-control-plaintext @error('user_name') is-invalid @enderror" name="user_name" value="{{ Auth::user()->user_name }}" required autocomplete="user_name" autofocus>
