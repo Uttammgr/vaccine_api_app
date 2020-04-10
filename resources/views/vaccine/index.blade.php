@@ -9,9 +9,7 @@
                  @can('manage-users')
                 <div class="col4 mb-4">
                     <a href=" {{route('vaccine.create')}} ">
-
                         <button class="btn btn-primary">Add new vaccine</button></a>
-
                 </div>
                 @endcan
 
@@ -32,14 +30,13 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                 @foreach ($vaccines  as  $vaccine)
+                                 @forelse ($vaccines  as $key =>  $vaccine)
                                      <tr>
-                                          <th>{{ $vaccine->id }}</th>
+                                          <th>{{ $key+1 }}</th>
                                           <td>{{$vaccine->vaccine_name}}</td>
                                           <td>{{$vaccine->qualified_candidate}}</td>
                                           <td>{{$vaccine->required_doses}}</td>
                                          <td>
-
                                              <form action="{{route('vaccine.destroy', $vaccine->id)}}" method="post">
                                                  <a href="{{route('vaccine.show', $vaccine->id)}}">  <button type="button" class="btn btn-outline-primary">Details</button> </a>
                                                 @can('manage-users')
@@ -49,12 +46,10 @@
                                                  <button type="submit" class="btn btn-outline-danger">Delete</button>
                                                  @endcan
                                              </form>
-
                                          </td>
+                                         @empty<td>no record found</td>
                                      </tr>
-                                 @endforeach
-
-
+                                 @endforelse
                               </tbody>
                             </table>
 

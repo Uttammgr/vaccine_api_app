@@ -28,9 +28,7 @@ class UsageController extends Controller
     public function create()
     {
         $vaccine_list = Vaccine::select('id', 'vaccine_name')->get();
-
-        return view('vaccine_usage.create',compact(
-            'vaccine_list'));
+        return view('vaccine_usage.create',compact('vaccine_list'));
     }
 
     /**
@@ -41,18 +39,10 @@ class UsageController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $user_id = auth::user()->id;
         $request->request->add(['user_id' => $user_id]);
-//         dd($request);
         Usage::create($request->all());
         return redirect()->route('usage.index')->with('success','usage record added');
-
-
-
-//        $input = $request->all();
-//        $vaccine_use_info =
     }
 
     /**
@@ -61,11 +51,11 @@ class UsageController extends Controller
      * @param  \App\Usage  $usage
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    /*public function show($id)
     {
        $vaccine_usage = Usage::find($id);
-        return view('vaccine.details', compact('vaccine_usage'));
-    }
+       return view('vaccine.details', compact('vaccine_usage'));
+    }*/
 
     /**
      * Show the form for editing the specified resource.
@@ -75,7 +65,7 @@ class UsageController extends Controller
      */
     public function edit($id)
     {
-         $vaccine_list = Vaccine::select('id', 'vaccine_name')->get();
+        $vaccine_list = Vaccine::select('id', 'vaccine_name')->get();
         $vaccine_usage = Usage::find($id);
         return view('vaccine_usage.edit', compact('vaccine_usage','vaccine_list'));
     }
@@ -89,13 +79,11 @@ class UsageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $vaccine_usage = Vaccine::find($id);
-         $vaccine_usage->vaccine_name = $request->get('vaccine_name');
-         $vaccine_usage->taken_doses= $request->get('taken_doses');
-         $vaccine_usage->remaining_doses = $request->get('remaining_doses');
-         $vaccine_usage->save();
-
-         return redirect()->route('usage.index')->with('succes', 'successfully_updated');
+        $vaccine_usage = Usage::find($id);
+        $vaccine_usage->taken_doses= $request->get('taken_doses');
+        $vaccine_usage->remaining_doses = $request->get('remaining_doses');
+        $vaccine_usage->save();
+        return redirect()->route('usage.index')->with('succes', 'successfully_updated');
 
     }
 
