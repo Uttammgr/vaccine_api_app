@@ -22,8 +22,8 @@ class CreateVaccinesTable extends Migration
             $table->string('qualified_candidate')->nullable();
             $table->string('disqualified_candidate')->nullable();
             $table->text('precautions')->nullable();
-            $table->string('required_doses')->nullable();
-            $table->string('age')->nullable();
+            $table->integer('required_doses')->nullable();
+            $table->integer('age')->nullable();
             $table->timestamps();
 
         });

@@ -71,11 +71,11 @@ class mAuthController extends Controller
     }
 
     //get single registered user
-  /*  public function show($id){
-         $user = User::findOrFail($id);
+    public function show($id){
+         $user = new UserResource(User::findOrFail($id)->load('usages'));
          $respbind  = responseHelpers::createResponse(false, 200, null , $user);
          return response()->json($respbind, 200);
-    }*/
+    }
 
     //update user
     public function update(Request $request, $id)

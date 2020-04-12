@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\Vaccine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VaccinesController extends Controller
 {
@@ -16,6 +18,27 @@ class VaccinesController extends Controller
     {
             $vaccines = Vaccine::all();
            return view('vaccine.index')->with('vaccines', $vaccines);
+//
+//            $required_vaccines = Vaccine::all();
+//             dd($required_vaccines);
+//                        dd($required_vaccines);
+//             $user->vaccines()->vaccines_->attach();
+//             $user->vaccines()->attach($required_vaccines);
+
+//        $vacc_usage = DB::table('vaccines');
+//        $vacc_usage = Vaccine::select('id')->pluck('id');
+//         $role = Role::select('id')->where('name', 'user')->first();
+
+//                      $add_dose = Vaccine::all()->pluck('required_doses');
+//                      $add_dose =  DB::table('vaccines')->pluck('required_doses');
+//                      print  $required_vaccines;
+
+
+//         print ($vacc_usage);
+//         print ($role);
+//        foreach ($vacc_usage as $title) {
+//            print $title;
+//
     }
 
     /**

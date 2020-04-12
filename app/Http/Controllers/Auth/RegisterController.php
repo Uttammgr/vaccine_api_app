@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Role;
+use App\Usage;
 use App\User;
+use App\Vaccine;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -89,20 +91,37 @@ class RegisterController extends Controller
 //        ]);
 
 
-        DB::beginTransaction();
-        try {
+//        DB::beginTransaction();
+//        try {
              $userReqData = request()->all();
              $userReqData['password'] = Hash::make($data['password']);
              $user = User::create($userReqData);
 
-             $role = Role::select('id')->where('name', 'user')->first();
+             $role = Role::all();
              $user->roles()->attach($role);
 
-             DB::commit();
-        } catch (\Exception $e){
-            DB::rollBack();
-            throw $e;
-        }
+             $required_vaccines = Vaccine::all();
+//             $user->vaccines()->attach($required_vaccines, ['required_doses' => Vaccine::all()->pluck('required_doses')->flatten()]);
+             $user->vaccines()->attach($required_vaccines);
+
+
+//              $add_dose = Vaccine::all()->pluck('required_doses');
+//                $user->vaccines()->attach($add_dose);
+
+//              $required_vaccines = DB::table('vaccines')->pluck('required_doses');
+//              $user->
+
+//             $vacc_usage = Vaccine::select('id')->pluck('id');
+//             $user->usages()->create($vacc_usage);
+//             $user->save();
+
+
+
+//             DB::commit();
+//        } catch (\Exception $e){
+//            DB::rollBack();
+//            throw $e;
+//        }
         return $user;
     }
 }

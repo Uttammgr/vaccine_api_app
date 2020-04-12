@@ -48,8 +48,13 @@ class User extends Authenticatable
     ];
 
     public function vaccines(){
-        return $this->hasMany(Vaccine::class);
+        return $this->belongsToMany('App\Vaccine')->withTimestamps();
     }
+
+
+    // public function vaccines(){
+    //     return $this->hasMany(Vaccine::class);
+    // }
 
      public function usages()
     {

@@ -23,8 +23,12 @@ class Vaccine extends Model
 
      ];
 
-    public function vaccine_dose_time(){
-        return $this->hasMany(Usage::class);
+//    public function vaccine_dose_time(){
+//        return $this->hasMany(Usage::class);
+//    }
+
+    public function users(){
+        return $this->belongsToMany('App\Users')->withTimestamps()->withPivot('required_doses');
     }
 
 
