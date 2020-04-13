@@ -14,7 +14,13 @@ class Vaccination_timeResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
-        print 'hello';
+//        return parent::toArray($request);
+        return [
+            "id" => $this->id,
+            "vaccine_id" => $this->vaccine_id,
+            "age_start" => $this->age_start,
+            "age_end" => $this->age_end,
+            "dose" => $this->dose,
+        ];
     }
 }

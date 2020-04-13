@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Usage;
+use App\UserVaccine;
 use App\Vaccine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class UsageController extends Controller
+class UserVaccineController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class UsageController extends Controller
      */
     public function index()
     {
-        $vaccine_usage = Usage::all();
-        return view('vaccine_usage.index')->with('usage', $vaccine_usage );
+        $vaccine_usage = UserVaccine::all();
+        return view('vaccine_usage.index')->with('userVaccines', $vaccine_usage);
     }
 
     /**
@@ -41,32 +41,31 @@ class UsageController extends Controller
     {
         $user_id = auth::user()->id;
         $request->request->add(['user_id' => $user_id]);
-        Usage::create($request->all());
+        UserVaccine::create($request->all());
         return redirect()->route('usage.index')->with('success','usage record added');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Usage  $usage
+     * @param  \App\UserVaccine  $userVaccine
      * @return \Illuminate\Http\Response
      */
-    /*public function show($id)
+    public function show(UserVaccine $userVaccine)
     {
-       $vaccine_usage = Usage::find($id);
-       return view('vaccine.details', compact('vaccine_usage'));
-    }*/
+        abort(404);
+    }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Usage  $usage
+     * @param  \App\UserVaccine  $userVaccine
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $vaccine_list = Vaccine::select('id', 'vaccine_name')->get();
-        $vaccine_usage = Usage::find($id);
+        $vaccine_usage = UserVaccine::find($id);
         return view('vaccine_usage.edit', compact('vaccine_usage','vaccine_list'));
     }
 
@@ -74,28 +73,28 @@ class UsageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Usage  $usage
+     * @param  \App\UserVaccine  $userVaccine
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $vaccine_usage = Usage::find($id);
+        $vaccine_usage = UserVaccine::find($id);
         $vaccine_usage->taken_doses= $request->get('taken_doses');
-        $vaccine_usage->remaining_doses = $request->get('remaining_doses');
+//        dd($vaccine_usage);
+//        $vaccine_usage->remaining_doses = $request->get('remaining_doses');
         $vaccine_usage->save();
         return redirect()->route('usage.index')->with('succes', 'successfully_updated');
-
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Usage  $usage
+     * @param  \App\UserVaccine  $userVaccine
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $vaccine_usage = Usage::find($id);
+        $vaccine_usage = UserVaccine::find($id);
         $vaccine_usage->delete();
         return redirect()->route('usage.index')->with('success', 'successfully deleted');
     }

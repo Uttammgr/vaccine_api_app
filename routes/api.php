@@ -34,6 +34,6 @@ Route::post('/login', 'API\mAuthController@login');
 //other api endpoints
 Route::apiResource('/vaccines', 'API\VaccinesController');
 //    ->middleware('auth:api');
-Route::apiResource('/vaccine_used', 'API\UsagesController');
+ Route::apiResource('/vaccine_used', 'API\UserVaccineController');
 //    ->middleware('auth');
 Route::apiResource('/vaccines_times', 'API\VaccinationTimeController');

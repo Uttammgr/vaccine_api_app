@@ -17,7 +17,7 @@ class VaccinesController extends Controller
      */
     public function index()
     {
-        $vaccine_list = VaccineResource::collection(Vaccine::all());
+        $vaccine_list = VaccineResource::collection(Vaccine::with('vaccination_time')->paginate(10));
         $respbind  = responseHelpers::createResponse(false, 200, null, $vaccine_list);
         return response()->json($respbind, 200);
 
@@ -45,11 +45,9 @@ class VaccinesController extends Controller
      */
     public function show($id)
     {
-        $vaccine = Vaccine::find($id);
+        $vaccine = new VaccineResource(Vaccine::findorFail($id)->load('vaccination_time'));
         $respbind  = responseHelpers::createResponse(false, 200, null, $vaccine);
         return response()->json($respbind, 200);
-
-
     }
 
     /**

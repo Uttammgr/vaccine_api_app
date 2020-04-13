@@ -22,7 +22,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/vaccine', 'VaccinesController')->middleware('auth');
-Route::resource('/usage', 'UsageController')->middleware('auth');
+Route::resource('/usage', 'UserVaccineController')->middleware('auth');
 Route::resource('/vaccine_time', 'VaccinationTimeController');
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:manage-users')->group(function(){

@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Vaccine;
 use Illuminate\Http\Resources\Json\JsonResource;
+use function GuzzleHttp\Promise\all;
 
 class UserResource extends JsonResource
 {
@@ -20,12 +22,15 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->full_name,
             'email' => $this->email,
-//            'vaccines' => VaccineResource::collection($this->vaccines),
-//            'Required vaccines' => UsageResource::collection($this->usages),
-            'Required vaccines' => UsageResource::collection($this->whenLoaded('usages')),
+//            'vaccines' => VaccineResource::collection(Vaccine::all()),
+            'Required vaccines' => UserVaccineResource::collection($this->userVaccines),
+//            'Required vaccines' => UsageResource::collection($this->whenLoaded('usages'), Vaccine::all()),
 //             'required_vaccine' => [
+//                 UsageResource::collection($this->whenLoaded('usages'), Vaccine::all()),
+
+
 //                 'id' => $this->vaccine_id,
-////                 'name' =>$this->collection->first(),
+//                 'name' =>$this->collection->first(),
 //                 'required_doses'=> $this->required_doses,
 //                 'taken_doses'=> $this->taken_doses,
 //             ],
@@ -35,3 +40,4 @@ class UserResource extends JsonResource
 
 
 }
+

@@ -2,15 +2,15 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Usage extends Model
+class UserVaccine extends Pivot
 {
-    protected $fillable= [
-      'user_id',
-      'vaccine_id',
-      'taken_doses',
-      'remaining_doses'
+    protected $fillable = [
+        'user_id',
+        'vaccine_id',
+        'taken_doses',
+        'remaining_doses'
     ];
 
     protected $hidden = [

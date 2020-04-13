@@ -39,6 +39,7 @@ class VaccinationTimeController extends Controller
     public function store(Request $request)
     {
         Vaccination_time::create($request->all());
+//        dd($request);
         return redirect()->route('vaccine_time.index')->with('success', 'Vaccine marker added ');
     }
 
@@ -48,10 +49,10 @@ class VaccinationTimeController extends Controller
      * @param  \App\Vaccination_time  $vaccination_time
      * @return \Illuminate\Http\Response
      */
-    /*public function show(Vaccination_time $vaccination_time)
+    public function show(Vaccination_time $vaccination_time)
     {
-
-    }*/
+        abort(404);
+    }
 
     /**
      * Show the form for editing the specified resource.

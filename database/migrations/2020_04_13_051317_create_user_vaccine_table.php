@@ -18,7 +18,6 @@ class CreateUserVaccineTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('vaccine_id');
             $table->string('taken_doses')->default(0);
-//            $table->integer('required_doses')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('vaccine_id')->references('id')->on('vaccines')->onDelete('cascade');
             $table->timestamps();

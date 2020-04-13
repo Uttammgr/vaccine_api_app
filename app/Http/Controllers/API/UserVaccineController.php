@@ -4,11 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\responseHelpers;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UsageResource;
-use App\Usage;
+use App\Http\Resources\UserVaccineResource;
+use App\UserVaccine;
 use Illuminate\Http\Request;
 
-class UsagesController extends Controller
+class UserVaccineController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,9 @@ class UsagesController extends Controller
      */
     public function index()
     {
-        $used_vaccines =  UsageResource::Collection(Usage::with('users','vaccines')->paginate(10));
+        $used_vaccines =  UserVaccineResource::Collection(UserVaccine::with('users','vaccines')->paginate(10));
         $respbind  = responseHelpers::createResponse(false, 200, null, $used_vaccines);
         return response()->json($respbind, 200);
-
     }
 
     /**
@@ -31,7 +30,7 @@ class UsagesController extends Controller
      */
     public function store(Request $request)
     {
-        $vaccine_usage  = Usage::create($request->all());
+        $vaccine_usage  = UserVaccine::create($request->all());
         $respbind  = responseHelpers::createResponse(false, 200, 'Success!! new vaccine use added', $vaccine_usage);
         return response()->json($respbind, 200 );
     }
@@ -39,27 +38,26 @@ class UsagesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Usage  $usage
+     * @param  \App\UserVaccine  $userVaccine
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $vaccine_usage = Usage::find($id);
-        $respbind  = responseHelpers::createResponse(false, 200, null, $vaccine_usage);
-        return response()->json($respbind, 200);
-
+        $vaccine_usage = new  UserVaccineResource(UserVaccine::findorFail($id)->load('users','vaccines'));
+         $respbind  = responseHelpers::createResponse(false, 200, null , $vaccine_usage);
+         return response()->json($respbind, 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Usage  $usage
+     * @param  \App\UserVaccine  $userVaccine
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $vaccine_usage = Usage::find($id);
+        $vaccine_usage = UserVaccine::find($id);
         $vaccine_usage->update($request->all());
         $respbind  = responseHelpers::createResponse(false, 200, 'Success!!taken vaccine updated', null);
         return response()->json($respbind, 200 );
@@ -68,12 +66,12 @@ class UsagesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Usage  $usage
+     * @param  \App\UserVaccine  $userVaccine
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(UserVaccine $userVaccine)
     {
-        $vaccine_usage = Usage::find($id);
+        $vaccine_usage = UserVaccine::find($id);
         $vaccine_usage->delete();
         $respbind  = responseHelpers::createResponse(false, 200, 'Success!! taken vaccine record deleted', null);
         return response()->json($respbind, 200 );

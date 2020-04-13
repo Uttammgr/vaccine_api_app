@@ -6,6 +6,7 @@ use App\Helpers\responseHelpers;
 use App\Http\Resources\UserResource;
 use App\Role;
 use App\User;
+use App\Vaccine;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class mAuthController extends Controller
     //for listing all the users and single user for time being
     public function index()
     {
-        $userListing = UserResource::Collection(User::with( 'usages')->paginate(10));
+        $userListing = UserResource::Collection(User::with( 'userVaccines')->paginate(10));
         $respbind  = responseHelpers::createResponse(false, 200, null, $userListing);
         return response()->json($respbind, 200);
     }
@@ -46,8 +47,13 @@ class mAuthController extends Controller
         $input = $request->all();
         $input['password'] = Hash::make($request->password);
         $user = User::create($input);
+
         $role = Role::select('id')->where('name', 'user')->first();
         $user->roles()->attach($role);
+
+        $required_vaccines = Vaccine::all();
+        $user->vaccines()->attach($required_vaccines);
+
         $access_token = $user->createToken('authToken')->accessToken;
 
         $respbind  = responseHelpers::createResponse(false, 201, 'Success!! User registered', ['User' => $user, 'access_token'=> $access_token]);
@@ -72,7 +78,9 @@ class mAuthController extends Controller
 
     //get single registered user
     public function show($id){
-         $user = new UserResource(User::findOrFail($id)->load('usages'));
+         $user = new UserResource(User::findOrFail($id)->load('userVaccines','vaccines'));
+//         dd($user);
+//         $user->loadMissing('vaccines')->pluck('required_doses');
          $respbind  = responseHelpers::createResponse(false, 200, null , $user);
          return response()->json($respbind, 200);
     }

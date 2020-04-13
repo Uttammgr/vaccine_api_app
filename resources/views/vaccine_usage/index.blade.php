@@ -29,8 +29,9 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                 @forelse($usage  as $key =>  $used)
+                                 @forelse($UserVaccine  as $key =>  $used)
                                      <tr>
+{{--                                         @dd($used)--}}
                                           <th>{{ $key+1}}</th>
                                           <td>{{$used->vaccines->vaccine_name}}</td>
                                           <td>{{$used->vaccines->required_doses}}</td>
