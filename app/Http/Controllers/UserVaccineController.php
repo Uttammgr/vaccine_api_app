@@ -27,7 +27,8 @@ class UserVaccineController extends Controller
      */
     public function create()
     {
-        $vaccine_list = Vaccine::select('id', 'vaccine_name')->get();
+//        $vaccine_list = Vaccine::select('id', 'vaccine_name')->get();
+        $vaccine_list = Vaccine::all();
         return view('vaccine_usage.create',compact('vaccine_list'));
     }
 

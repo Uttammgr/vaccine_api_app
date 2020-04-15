@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+//use App\Providers\RouteServiceProvider;
 use App\Role;
 use App\Usage;
 use App\User;
@@ -77,22 +77,8 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         // dd($data);
-
-//        $user =  User::create([
-//            'user_name'     => $data['user_name'],
-//            'full_name'     => $data['full_name'],
-//            'address'       => $data['address'],
-//            'mobile_no'     => $data['mobile_no' ],
-//            'date_of_birth' => $data['date_of_birth'],
-//            'gender'        => $data['gender'],
-//            'blood_type'    => $data['blood_type'],
-//            'email'         => $data['email'],
-//            'password'      => Hash::make($data['password']),
-//        ]);
-
-
-//        DB::beginTransaction();
-//        try {
+        DB::beginTransaction();
+        try {
              $userReqData = request()->all();
              $userReqData['password'] = Hash::make($data['password']);
              $user = User::create($userReqData);
@@ -101,27 +87,13 @@ class RegisterController extends Controller
              $user->roles()->attach($role);
 
              $required_vaccines = Vaccine::all();
-//             $user->vaccines()->attach($required_vaccines, ['required_doses' => Vaccine::all()->pluck('required_doses')->flatten()]);
              $user->vaccines()->attach($required_vaccines);
-
-
-//              $add_dose = Vaccine::all()->pluck('required_doses');
-//                $user->vaccines()->attach($add_dose);
-
-//              $required_vaccines = DB::table('vaccines')->pluck('required_doses');
-//              $user->
-
-//             $vacc_usage = Vaccine::select('id')->pluck('id');
-//             $user->usages()->create($vacc_usage);
-//             $user->save();
-
-
-
-//             DB::commit();
-//        } catch (\Exception $e){
-//            DB::rollBack();
-//            throw $e;
-//        }
+//             $user->vaccines()->attach($required_vaccines, ['required_doses' => Vaccine::all()->pluck('required_doses')->flatten()]);
+            DB::commit();
+        } catch (\Exception $e){
+            DB::rollBack();
+            throw $e;
+        }
         return $user;
     }
 }

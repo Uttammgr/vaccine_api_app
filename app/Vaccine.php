@@ -28,7 +28,10 @@ class Vaccine extends Model
     }
 
     public function users(){
-        return $this->belongsToMany('App\Users')->withTimestamps()->withPivot('required_doses');
+        return $this->belongsToMany(User::class)
+            ->withPivot('taken_doses')
+            ->withTimestamps();
+//            ->withPivot('required_doses');
     }
 
 

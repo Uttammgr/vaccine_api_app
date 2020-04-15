@@ -31,7 +31,7 @@ class VaccineResource extends JsonResource
           'required_doses'=> $this->required_doses,
           'taken_doses'=> $this->taken_doses,
           'age'=> $this->age,
-            'vaccine_time' => Vaccination_timeResource::collection($this->vaccination_time)
+            'vaccine_time' => Vaccination_timeResource::collection($this->vaccination_time),
 //          'created_at' =>$this->created_at,
 //          'updated_at' =>$this->updated_at,
 

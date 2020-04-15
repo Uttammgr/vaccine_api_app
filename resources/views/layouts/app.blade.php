@@ -109,5 +109,7 @@
             @yield('content')
         </main>
     </div>
+@stack('scripts')
+<script src="{{ url('js/custom.js') }}"></script>
 </body>
 </html>

@@ -10708,65 +10708,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 
-/*
+
 function elementExists(id) {
-    return $("#" + id).length > 0;
+  return jquery__WEBPACK_IMPORTED_MODULE_0___default()("#" + id).length > 0;
 }
 
-if (
-    elementExists("vaccine-select") &&
-    elementExists("vaccine-doses-select")
-) {
-    let vaccineField = $("#vaccine-select");
-    let vaccDoseField = $("#vaccine-doses-select");
+if (elementExists("vaccine_select") && elementExists("dose_display")) {
+  var vaccineField = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#vaccine_select");
+  var doseField = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#dose_display");
+  doseField.prop("disabled", true); // if (doseField.data("value")) {
 
-    vaccDoseField.prop("disabled", true);
+  /* $.get("/vaccine?type=json&required_doses=" + vaccineField.val()).done( data => {
+           doseField.empty();
+           doseField.append(`<option value="">Select</option>`);
+           $.each(data, function(key, user) {
+               if (doseField.data("value") === user.id) {
+                   doseField.append(
+                       `<option value="${user.id}" selected>${user.name}</option>`
+                   );
+               } else {
+                   doseField.append(
+                       `<option value="${user.id}">${user.name}</option>`
+                   );
+               }
+               doseField.prop("disabled", false);
+           });
+       }
+   );
+  }*/
 
-    if (vaccDoseField.data("value")) {
-        $.get("/vaccines?type=json" + vaccineField.val()).done(
-            data => {
-                vaccDoseField.empty();
-                vaccDoseField.append(`<option value="">Select</option>`);
-                $.each(data, function(key, vaccine) {
-                    if (vaccDoseField.data("value") === vaccine.id) {
-                        vaccDoseField.append(
-                            `<option value="${vaccine.id}" selected>${vaccine.name}</option>`
-                        );
-                    } else {
-                        vaccDoseField.append(
-                            `<option value="${user.id}">${user.name}</option>`
-                        );
-                    }
-                    vaccDoseField.prop("disabled", false);
-                });
-            }
-        );
-    }
-
-    vaccineField.on("change", e => {
-        vaccDoseField.prop("disabled", true);
-        let selectedDepartment = vaccineField.val();
-        if (selectedDepartment !== "") {
-            $.get(
-                "/investigationofficers?type=json&department=" +
-                    selectedDepartment
-            ).done(data => {
-                vaccDoseField.empty();
-                vaccDoseField.append(`<option value="">Select</option>`);
-                $.each(data, function(key, user) {
-                    vaccDoseField.append(
-                        `<option value="${user.id}">${user.name}</option>`
-                    );
-                    vaccDoseField.prop("disabled", false);
-                });
-            });
-        } else {
-            vaccDoseField.empty();
-            vaccDoseField.prop("disabled", true);
-        }
-    });
+  jquery__WEBPACK_IMPORTED_MODULE_0___default.a.get("/vaccine?type=json&required_doses=", function (data) {
+    doseField.empty();
+    doseField.append("<option value=\"\">Select</option>");
+    console.log("Data Loaded: " + data); // $.each(data, function(key, user) {
+    //     if (doseField.data("value") === user.id) {
+    //         doseField.append(
+    //             `<option value="${user.id}" selected>${user.name}</option>`
+    //         );
+    //     } else {
+    //         doseField.append(
+    //             `<option value="${user.id}">${user.name}</option>`
+    //         );
+    //     }
+    //     doseField.prop("disabled", false);
+    // });
+  });
 }
-*/
 
 /***/ }),
 
@@ -10777,7 +10764,7 @@ if (
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/uttam.mgr/Desktop/test_lv/vaccine_api_app/resources/js/custom.js */"./resources/js/custom.js");
+module.exports = __webpack_require__(/*! /Users/uttam.mgr/Desktop/vaccine_api_app/resources/js/custom.js */"./resources/js/custom.js");
 
 
 /***/ })

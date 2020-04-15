@@ -15,14 +15,27 @@
                             <label for="vaccine_name" class="col-md-4 col-form-label text-md-right">Vaccine Name</label>
 
                             <div class="col-md-6">
-                                <select name="vaccine_id" class="form-control" id="vaccine-select">
+                                <select name="vaccine_id" class="form-control" id="vaccine_select">
                                  <option value="">Select</option>
                                         @foreach($vaccine_list as $vaccine)
                                             <option value="{{ $vaccine->id }}" @if(old('vaccine') === $vaccine->id) selected @endif>{{ $vaccine->vaccine_name }}</option>
                                         @endforeach
-                                </select>
-                            </div>
+                                </select></div>
                         </div>
+
+{{--                         <div class="form-group row">--}}
+{{--                            <label for="required_doses" class="col-md-4 col-form-label text-md-right">Required Doses</label>--}}
+
+{{--                            <div class="col-md-6">--}}
+{{--                                <select name="required_doses" class="form-control" id="dose_display">--}}
+{{--                                 <option value="">Select</option>--}}
+{{--                                     @foreach($vaccine_list as $key => $vaccine)--}}
+{{--                                            <option value="{{ $vaccine->id }}" @if(old('vaccine') === $vaccine->id) selected @endif>{{ $vaccine->required_doses }}</option>--}}
+{{--                                         @dd($vaccine->required_doses)--}}
+{{--                                 @endforeach--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
 
                         <div class="form-group row">
                             <label for="taken_doses" class="col-md-4 col-form-label text-md-right">taken doses</label>

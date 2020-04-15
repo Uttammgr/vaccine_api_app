@@ -47,13 +47,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Get the vaccines of the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function vaccines(){
-        return $this->belongsToMany('App\Vaccine')->withTimestamps();
+        return $this->belongsToMany('App\Vaccine')
+            ->withPivot('taken_doses')
+            ->withTimestamps();
     }
 
-     public function vaccine(){
-         return $this->hasMany(Vaccine::class);
-     }
+//     public function vaccine(){
+//         return $this->hasMany(Vaccine::class);
+//     }
 
     public function userVaccines(){
         return $this->hasMany(UserVaccine::class);
