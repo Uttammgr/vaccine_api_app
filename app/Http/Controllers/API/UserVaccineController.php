@@ -17,7 +17,8 @@ class UserVaccineController extends Controller
      */
     public function index()
     {
-        $used_vaccines =  UserVaccineResource::Collection(UserVaccine::with('users','vaccines')->paginate(10));
+//        $used_vaccines =  UserVaccineResource::Collection(UserVaccine::with('users','vaccines')->paginate(10));
+        $used_vaccines =  UserVaccine::all();
         $respbind  = responseHelpers::createResponse(false, 200, 'Vaccine Usage listed', null, $used_vaccines);
         return response()->json($respbind, 200);
     }
@@ -43,9 +44,10 @@ class UserVaccineController extends Controller
      */
     public function show($id)
     {
-         $vaccine_usage = new  UserVaccineResource(UserVaccine::findorFail($id)->load('users','vaccines'));
+//         $vaccine_usage = new  UserVaccineResource(UserVaccine::findorFail($id)->load('users','vaccines'));
+         $vaccine_usage = (UserVaccine::findorFail($id));
          $respbind  = responseHelpers::createResponse(false, 200, 'single vaccine usage listed', null , $vaccine_usage);
-         return response()->json($respbind, 200);
+         return response()->json(['valid' => auth()->check(), $respbind, 200]);
     }
 
     /**
@@ -69,7 +71,7 @@ class UserVaccineController extends Controller
      * @param  \App\UserVaccine  $userVaccine
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserVaccine $userVaccine)
+    public function destroy($id)
     {
         $vaccine_usage = UserVaccine::find($id);
         $vaccine_usage->delete();
