@@ -18,7 +18,7 @@ class VaccinesController extends Controller
     public function index()
     {
         $vaccine_list = VaccineResource::collection(Vaccine::with('vaccination_time')->paginate(10));
-        $respbind  = responseHelpers::createResponse(false, 200, null, $vaccine_list);
+        $respbind  = responseHelpers::createResponse(false, 200, 'vaccines successfully fetched',null, $vaccine_list);
         return response()->json($respbind, 200);
 
     }
@@ -33,7 +33,7 @@ class VaccinesController extends Controller
     {
         //
          $vaccine = Vaccine::create($request->all());
-          $respbind  = responseHelpers::createResponse(false, 200, 'Success!! new vaccine added', $vaccine);
+          $respbind  = responseHelpers::createResponse(false, 200, 'success vaccine stored','Success!! new vaccine added', $vaccine);
          return response()->json($respbind, 200 );
     }
 
@@ -46,7 +46,7 @@ class VaccinesController extends Controller
     public function show($id)
     {
         $vaccine = new VaccineResource(Vaccine::findorFail($id)->load('vaccination_time'));
-        $respbind  = responseHelpers::createResponse(false, 200, null, $vaccine);
+        $respbind  = responseHelpers::createResponse(false, 200, 'single vaccine fetched',null, $vaccine);
         return response()->json($respbind, 200);
     }
 
@@ -61,7 +61,7 @@ class VaccinesController extends Controller
     {
         $vaccine = Vaccine::find($id);
          $vaccine->update($request->all());
-        $respbind  = responseHelpers::createResponse(false, 200, 'Success!! vaccine updated', null);
+        $respbind  = responseHelpers::createResponse(false, 200, 'Success!! vaccine updated', null, null);
         return response()->json($respbind, 200 );
     }
 
@@ -75,7 +75,7 @@ class VaccinesController extends Controller
     {
          $vaccine = Vaccine::find($id);
          $vaccine->delete();
-         $respbind  = responseHelpers::createResponse(false, 200, 'Success!! vaccine record deleted', null);
+         $respbind  = responseHelpers::createResponse(false, 200, null,'Success!! vaccine record deleted', null);
         return response()->json($respbind, 200 );
     }
 }

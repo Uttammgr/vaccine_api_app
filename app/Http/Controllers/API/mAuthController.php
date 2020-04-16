@@ -19,7 +19,7 @@ class mAuthController extends Controller
     public function index()
     {
         $userListing = UserResource::Collection(User::with( 'userVaccines')->paginate(10));
-        $respbind  = responseHelpers::createResponse(false, 200, null, $userListing);
+        $respbind  = responseHelpers::createResponse(false, 200, 'user list succesfully fetched',null, $userListing);
         return response()->json($respbind, 200);
     }
 
@@ -57,7 +57,7 @@ class mAuthController extends Controller
         $user->vaccines()->attach($required_vaccines);
 
         $access_token = $user->createToken('authToken')->accessToken;
-        $respbind  = responseHelpers::createResponse(false, 201, 'Success!! User registered', ['User' => $user, 'access_token'=> $access_token]);
+        $respbind  = responseHelpers::createResponse(false, 201, 'Success!! User registered', ['User' => $user, 'access_token'=> $access_token], null);
         return response()->json($respbind, 200 );
 
     }
@@ -71,12 +71,12 @@ class mAuthController extends Controller
         ]);
 
         if (!Auth::attempt($credentials)) {
-            $respbind = responseHelpers::createResponse(true, 401, 'authentication failed, Unauthorised', null);
+            $respbind = responseHelpers::createResponse(true, 401, null ,null,'authentication failed, Unauthorised');
             return response()->json($respbind, 401);
         }
              $user =  Auth::user();
              $access_token = $user->createToken('authToken')->accessToken;
-             $respbind  = responseHelpers::createResponse(false, 200, 'login Successful !!', ['User' => $user, 'access_token'=> $access_token]);
+             $respbind  = responseHelpers::createResponse(false, 200, null,'login Successful !!', ['User' => $user, 'access_token'=> $access_token]);
              return response()->json($respbind, 200);
 
     }
@@ -85,7 +85,7 @@ class mAuthController extends Controller
     public function show($id){
          $user = new UserResource(User::findOrFail($id)->load('userVaccines','vaccines'));
 //         $user->loadMissing('vaccines')->pluck('required_doses');
-         $respbind  = responseHelpers::createResponse(false, 200, null , $user);
+         $respbind  = responseHelpers::createResponse(false, 200, 'single user fetch successful', null , $user);
          return response()->json($respbind, 200);
     }
 
@@ -94,7 +94,7 @@ class mAuthController extends Controller
     {
         $user = User::find($id);
         $user->update($request->all());
-        $respbind = responseHelpers::createResponse(false, 200, 'Success!! User updated', null);
+        $respbind = responseHelpers::createResponse(false, 200, null, 'Success!! User updated', null);
         return response()->json($respbind, 200);
 
     }
@@ -104,7 +104,7 @@ class mAuthController extends Controller
 
         $user = User::find($id);
         $user->delete();
-        $respbind  = responseHelpers::createResponse(false, 200, 'Success!! User deleted', null);
+        $respbind  = responseHelpers::createResponse(false, 200, null, 'Success!! User deleted', null);
         return response()->json($respbind, 200 );
 
     }

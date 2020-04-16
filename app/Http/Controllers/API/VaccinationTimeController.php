@@ -18,7 +18,7 @@ class VaccinationTimeController extends Controller
     public function index()
     {
         $vacc_dose_time = Vaccination_timeResource::Collection(Vaccination_time::with('vaccines')->paginate(10));
-        $responseBinding = responseHelpers::createResponse(false, 200,null ,$vacc_dose_time);
+        $responseBinding = responseHelpers::createResponse(false, 200,'vaccine time and age listed successful', null ,$vacc_dose_time);
         return response()->json($responseBinding, 200);
     }
 
@@ -31,7 +31,7 @@ class VaccinationTimeController extends Controller
     public function store(Request $request)
     {
         $vacc_dose_time = Vaccination_time::create($request->all());
-        $responseBinding = responseHelpers::createResponse(false, 200,'success!! time and doses has been added to vaccine' ,$vacc_dose_time);
+        $responseBinding = responseHelpers::createResponse(false, 200,'success!! time and doses has been added to vaccine', null ,$vacc_dose_time);
         return response()->json($responseBinding, 200);
 
     }
@@ -45,7 +45,7 @@ class VaccinationTimeController extends Controller
     public function show($id)
     {
         $vacc_dose_time = Vaccination_time::find($id);
-        $responseBinding = responseHelpers::createResponse(false, 200,null ,$vacc_dose_time);
+        $responseBinding = responseHelpers::createResponse(false, 200, 'single Vaccine time age retrieved, successfully',null ,$vacc_dose_time);
         return response()->json($responseBinding, 200);
     }
 
@@ -60,7 +60,7 @@ class VaccinationTimeController extends Controller
     {
          $Vacc_dose_time =  Vaccination_time::find($id);
          $Vacc_dose_time->update($request->all());
-         $responseBinding = responseHelpers::createResponse(false, 200,'success!! time and dose update done ' ,null);
+         $responseBinding = responseHelpers::createResponse(false, 200,'success!! time and dose update done ',null ,null);
          return response()->json($responseBinding, 200);
 
     }
@@ -75,7 +75,7 @@ class VaccinationTimeController extends Controller
     {
         $vacc_dose_time = Vaccination_time::find($id);
         $vacc_dose_time->delete();
-        $responseBinding = responseHelpers::createResponse(false, 200,'success!! time and dose record deleted' ,null );
+        $responseBinding = responseHelpers::createResponse(false, 200, null,'success!! time and dose record deleted' ,null );
         return response()->json($responseBinding, 200);
     }
 }

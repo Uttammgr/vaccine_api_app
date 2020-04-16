@@ -3,7 +3,7 @@
 namespace App\Helpers;
 
 class responseHelpers {
-     public static function createResponse($is_error, $status_Code, $message, $content){
+     public static function createResponse($is_error, $status_Code, $status_message, $message, $content){
          $taskresponse =  [];
 
          if ($is_error){
@@ -13,12 +13,12 @@ class responseHelpers {
          }else{
              $taskresponse['Success'] = true;
              $taskresponse['Status_Code'] = $status_Code;
+             $taskresponse['Status_message'] = $status_message;
              if ($content === null){
                  $taskresponse['message'] = $message;
              }else{
                  $taskresponse['data'] = $content;
              }
-
          }
          return $taskresponse;
      }

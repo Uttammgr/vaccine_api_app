@@ -18,7 +18,7 @@ class UserVaccineController extends Controller
     public function index()
     {
         $used_vaccines =  UserVaccineResource::Collection(UserVaccine::with('users','vaccines')->paginate(10));
-        $respbind  = responseHelpers::createResponse(false, 200, null, $used_vaccines);
+        $respbind  = responseHelpers::createResponse(false, 200, 'Vaccine Usage listed', null, $used_vaccines);
         return response()->json($respbind, 200);
     }
 
@@ -31,7 +31,7 @@ class UserVaccineController extends Controller
     public function store(Request $request)
     {
         $vaccine_usage  = UserVaccine::create($request->all());
-        $respbind  = responseHelpers::createResponse(false, 200, 'Success!! new vaccine use added', $vaccine_usage);
+        $respbind  = responseHelpers::createResponse(false, 200, null, 'Success!! new vaccine use added', $vaccine_usage);
         return response()->json($respbind, 200 );
     }
 
@@ -43,8 +43,8 @@ class UserVaccineController extends Controller
      */
     public function show($id)
     {
-        $vaccine_usage = new  UserVaccineResource(UserVaccine::findorFail($id)->load('users','vaccines'));
-         $respbind  = responseHelpers::createResponse(false, 200, null , $vaccine_usage);
+         $vaccine_usage = new  UserVaccineResource(UserVaccine::findorFail($id)->load('users','vaccines'));
+         $respbind  = responseHelpers::createResponse(false, 200, 'single vaccine usage listed', null , $vaccine_usage);
          return response()->json($respbind, 200);
     }
 
@@ -59,7 +59,7 @@ class UserVaccineController extends Controller
     {
         $vaccine_usage = UserVaccine::find($id);
         $vaccine_usage->update($request->all());
-        $respbind  = responseHelpers::createResponse(false, 200, 'Success!!taken vaccine updated', null);
+        $respbind  = responseHelpers::createResponse(false, 200, 'Success!!taken vaccine updated', null, null);
         return response()->json($respbind, 200 );
     }
 
@@ -73,7 +73,7 @@ class UserVaccineController extends Controller
     {
         $vaccine_usage = UserVaccine::find($id);
         $vaccine_usage->delete();
-        $respbind  = responseHelpers::createResponse(false, 200, 'Success!! taken vaccine record deleted', null);
+        $respbind  = responseHelpers::createResponse(false, 200, 'Success!! taken vaccine record deleted', null, null);
         return response()->json($respbind, 200 );
     }
 }

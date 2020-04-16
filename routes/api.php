@@ -26,14 +26,14 @@ Route::post('/login', 'API\mAuthController@login');
 //Route::group(['middleware' => 'auth:api'],function(){
     Route::get('/users', 'API\mAuthController@index');
     Route::get('/users/{id}', 'API\mAuthController@show');
-    Route::patch('/update_user/{id}', 'API\mAuthController@update');
-    Route::delete('/delete_user/{id}', 'API\mAuthController@destroy');
+    Route::patch('/users/{id}', 'API\mAuthController@update');
+    Route::delete('/users/{id}', 'API\mAuthController@destroy');
 //});
 
 
 //other api endpoints
 Route::apiResource('/vaccines', 'API\VaccinesController');
 //    ->middleware('auth:api');
- Route::apiResource('/vaccine_used', 'API\UserVaccineController');
+ Route::apiResource('/vaccines_used', 'API\UserVaccineController');
 //    ->middleware('auth');
 Route::apiResource('/vaccines_times', 'API\VaccinationTimeController');

@@ -16,7 +16,7 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->full_name,
+            'full_name' => $this->full_name,
             'email' => $this->email,
             'required_vaccines' => UserVaccineResource::collection($this->vaccines),
         ];
