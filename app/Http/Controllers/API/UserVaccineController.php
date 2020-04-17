@@ -45,9 +45,14 @@ class UserVaccineController extends Controller
     public function show($id)
     {
 //         $vaccine_usage = new  UserVaccineResource(UserVaccine::findorFail($id)->load('users','vaccines'));
-         $vaccine_usage = (UserVaccine::findorFail($id));
+         $vaccine_usage = UserVaccine::find($id);
+         if (is_null($vaccine_usage)){
+             $respbind  = responseHelpers::createResponse(true, 404, null, 'vaccine usage not found' , null);
+            return response()->json( $respbind, 200);
+         }
+
          $respbind  = responseHelpers::createResponse(false, 200, 'single vaccine usage listed', null , $vaccine_usage);
-         return response()->json(['valid' => auth()->check(), $respbind, 200]);
+         return response()->json( $respbind, 200);
     }
 
     /**
@@ -61,7 +66,7 @@ class UserVaccineController extends Controller
     {
         $vaccine_usage = UserVaccine::find($id);
         $vaccine_usage->update($request->all());
-        $respbind  = responseHelpers::createResponse(false, 200, 'Success!!taken vaccine updated', null, null);
+        $respbind  = responseHelpers::createResponse(false, 200, 'Success!!taken vaccine updated', null, $vaccine_usage);
         return response()->json($respbind, 200 );
     }
 
@@ -75,7 +80,7 @@ class UserVaccineController extends Controller
     {
         $vaccine_usage = UserVaccine::find($id);
         $vaccine_usage->delete();
-        $respbind  = responseHelpers::createResponse(false, 200, 'Success!! taken vaccine record deleted', null, null);
+        $respbind  = responseHelpers::createResponse(false, 200, null, 'Success!! taken vaccine record deleted', null);
         return response()->json($respbind, 200 );
     }
 }

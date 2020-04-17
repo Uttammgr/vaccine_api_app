@@ -45,6 +45,10 @@ class VaccinationTimeController extends Controller
     public function show($id)
     {
         $vacc_dose_time = Vaccination_time::find($id);
+        if (is_null($vacc_dose_time)){
+             $responseBinding = responseHelpers::createResponse(true, 404, null, 'vaccine time and dose not found' ,null);
+             return response()->json($responseBinding, 200);
+        }
         $responseBinding = responseHelpers::createResponse(false, 200, 'single Vaccine time age retrieved, successfully',null ,$vacc_dose_time);
         return response()->json($responseBinding, 200);
     }
@@ -60,7 +64,7 @@ class VaccinationTimeController extends Controller
     {
          $Vacc_dose_time =  Vaccination_time::find($id);
          $Vacc_dose_time->update($request->all());
-         $responseBinding = responseHelpers::createResponse(false, 200,'success!! time and dose update done ',null ,null);
+         $responseBinding = responseHelpers::createResponse(false, 200,'success!! time and dose update done ',null ,$Vacc_dose_time);
          return response()->json($responseBinding, 200);
 
     }

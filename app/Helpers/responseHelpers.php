@@ -13,7 +13,7 @@ class responseHelpers {
          }else{
              $taskresponse['Success'] = true;
              $taskresponse['Status_Code'] = $status_Code;
-             $taskresponse['Status_message'] = $status_message;
+             $taskresponse['message'] = $status_message;
              if ($content === null){
                  $taskresponse['message'] = $message;
              }else{

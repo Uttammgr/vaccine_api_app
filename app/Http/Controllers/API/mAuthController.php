@@ -84,6 +84,10 @@ class mAuthController extends Controller
     //get single registered user
     public function show($id){
          $user = new UserResource(User::findOrFail($id)->load('userVaccines','vaccines'));
+         if (is_null($user)){
+             $respbind  = responseHelpers::createResponse(true, 404, 'user not found', null, null);
+            return response()->json($respbind, 200);
+         }
 //         $user->loadMissing('vaccines')->pluck('required_doses');
          $respbind  = responseHelpers::createResponse(false, 200, 'single user fetch successful', null , $user);
          return response()->json($respbind, 200);
@@ -94,7 +98,7 @@ class mAuthController extends Controller
     {
         $user = User::find($id);
         $user->update($request->all());
-        $respbind = responseHelpers::createResponse(false, 200, null, 'Success!! User updated', null);
+        $respbind = responseHelpers::createResponse(false, 200, 'Success!! User details updated', null, $user);
         return response()->json($respbind, 200);
 
     }
