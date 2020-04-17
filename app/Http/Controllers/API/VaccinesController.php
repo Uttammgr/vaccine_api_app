@@ -31,7 +31,6 @@ class VaccinesController extends Controller
      */
     public function store(Request $request)
     {
-        //
          $vaccine = Vaccine::create($request->all());
           $respbind  = responseHelpers::createResponse(false, 200, 'success vaccine stored','Success!! new vaccine added', $vaccine);
          return response()->json($respbind, 200 );
@@ -45,9 +44,15 @@ class VaccinesController extends Controller
      */
     public function show($id)
     {
-        $vaccine = new VaccineResource(Vaccine::findorFail($id)->load('vaccination_time'));
+//        $vaccine = new VaccineResource(Vaccine::findorFail($id)->load('vaccination_time'));
+        $vaccine = Vaccine::find($id);
+
+        if ($vaccine){
+            $vaccine->load('vaccination_time');
+        }
+
         if (is_null($vaccine)){
-            $respbind  = responseHelpers::createResponse(true, 404, 'vaccine not found',null, $vaccine);
+            $respbind  = responseHelpers::createResponse(true, 404, null,'vaccine not found', $vaccine);
             return response()->json($respbind, 200);
         }
         $respbind  = responseHelpers::createResponse(false, 200, 'single vaccine fetched',null, $vaccine);
