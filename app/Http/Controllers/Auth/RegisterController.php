@@ -83,7 +83,7 @@ class RegisterController extends Controller
              $userReqData['password'] = Hash::make($data['password']);
              $user = User::create($userReqData);
 
-             $role = Role::all();
+             $role = Role::select('id')->where('name', 'user')->first();
              $user->roles()->attach($role);
 
              $required_vaccines = Vaccine::all();
